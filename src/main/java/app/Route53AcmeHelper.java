@@ -52,8 +52,11 @@ public class Route53AcmeHelper {
       @Override
       public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-          String domain = request.getHeader("CERTBOT_DOMAIN");
-          String validation = request.getHeader("CERTBOT_VALIDATION");
+          String domain = request.getHeader("CERTBOT-DOMAIN");
+          String validation = request.getHeader("CERTBOT-VALIDATION");
+          if (domain == null || validation == null)
+            throw new IllegalArgumentException("CERTBOT headers");
+
           assertAuthorized(request, allowedDomainsByToken, domain);
 
           String challengeDomain = "_acme-challenge." + domain + ".";
@@ -89,7 +92,7 @@ public class Route53AcmeHelper {
 
   private static void assertAuthorized(HttpServletRequest request, Map<String, List<String>> auth, String domain) {
     String authHeader = request.getHeader("Authorization");
-    if (!authHeader.startsWith("Bearer "))
+    if (authHeader == null || !authHeader.startsWith("Bearer "))
       throw new InvalidArgumentException("Authorization");
     String token = authHeader.substring("Bearer ".length());
     List<String> allowedDomains = auth.get(token);

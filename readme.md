@@ -78,8 +78,8 @@ set -e
 . /etc/letsencrypt/r53-secrets
 curl -fsS -XPOST \
   -H "Authorization: Bearer $TOKEN" \
-  -H "CERTBOT_DOMAIN: $CERTBOT_DOMAIN" \
-  -H "CERTBOT_VALIDATION: $CERTBOT_VALIDATION" \
+  -H "CERTBOT-DOMAIN: $CERTBOT_DOMAIN" \
+  -H "CERTBOT-VALIDATION: $CERTBOT_VALIDATION" \
   https://route53-acme-helper.example.com/
 ```
 
@@ -91,8 +91,8 @@ set -e
 . /etc/letsencrypt/r53-secrets
 curl -fsS -XDELETE \
   -H "Authorization: Bearer $TOKEN" \
-  -H "CERTBOT_DOMAIN: $CERTBOT_DOMAIN" \
-  -H "CERTBOT_VALIDATION: $CERTBOT_VALIDATION" \
+  -H "CERTBOT-DOMAIN: $CERTBOT_DOMAIN" \
+  -H "CERTBOT-VALIDATION: $CERTBOT_VALIDATION" \
   https://route53-acme-helper.example.com/
 ```
                
